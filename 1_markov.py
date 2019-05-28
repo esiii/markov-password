@@ -8,7 +8,7 @@ starttime = time.time()
 threshold_level = 10
 total_level = 1000
 
-total_length = 13#random.randint(6, 13)
+total_length = 13
 
 max_ngrams = 1
 
@@ -90,30 +90,8 @@ for i_length in range(0, total_length):
     size_tables.append({})
     for key in alphabet.keys():
         size_tables[i_length][key] = [0 for _ in range(total_level)]
-'''
-# 有变化，两个地方操作了table
-def partial_size2(current_length=0, prev_char='Ω', level=0):
-    #print("partial_%d")
-    # prev_char 的意思是之前已经生成的字符串的最后一个char
-    global total_length, threshold_level, partial_size_table
-    if level >= threshold_level:
-        return 0
-    if total_length == current_length:
-        partial_size_table[prev_char][current_length][level] += 1
-        return 1
-    # 只在可能的后继中找
-    sum_result = 0
-    for char in alphabet[prev_char]:
-        # 特殊处理使得不会超过index
-        new_level = min(level + mu_level(prev_char, char), total_level - 1)
-        if new_level == total_level -1:
-            print("oops")
-        sub_sum_result = partial_size2(current_length + 1, char, new_level)
-        sum_result += sub_sum_result
-        # print(prev_char, char, sub_sum_result, new_level)
-        partial_size_table[prev_char][current_length][level] += sub_sum_result
-    return sum_result
-'''
+
+
 init_flag = False
 def partial_size_fast(partial_length):
     global size_tables, threshold_level
@@ -137,19 +115,7 @@ def auto_partial_size():
     global total_length
     for i in range(total_length):
         partial_size_fast(i + 1)
-'''
-def get_key2(index, current_length=0, prev_char='Ω', level=0):
-    if total_length == current_length:
-        return ""
-    sum_result = 0
-    for char in alphabet[prev_char]:
-        new_level = min(level + mu_level(prev_char, char), total_level - 1)
-        size = partial_size_table[char][current_length + 1][new_level]
-        if sum_result + size > index:
-            print(current_length, prev_char,char)
-            return char + get_key2(index - sum_result, current_length + 1, char, new_level)
-        sum_result = sum_result + size
-'''
+
 
 def get_keyspace():
     global size_tables
