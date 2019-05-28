@@ -25,8 +25,7 @@ def DelLastChar(str):
 	return "".join(str_list)
 
 
-with open('/Users/esicao/Desktop/markov/markov-passwords-master/data/yuanshi2','rb') as file:
-#with open('/Users/esicao/Desktop/markov/markov-passwords-master/data/tt.txt', 'rb') as file:
+with open('/markov/data/password','rb') as file:
 	for line in file:
 		line = line.decode("latin-1")
 		line = line.replace('\n','å')
@@ -53,6 +52,6 @@ for ngram in stats:
 	for key, value in stats[ngram].items():
 		stats[ngram][key] = value / float(total)
 
-with open('/Users/esicao/Desktop/markov/markov-passwords-master/data/yuanshi-{}-gram.pickle'.format(max_ngrams), 'wb') as file:
+with open('/markov/data/{}-gram.pickle'.format(max_ngrams), 'wb') as file:
 	pickle.dump(stats, file)
 
