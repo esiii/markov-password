@@ -189,8 +189,7 @@ if __name__ == "__main__":
         res_2 = res.replace('å',' ')
         result_file.write(res_2 + '\n')
 
-    #t0, t1, t2 = size_tables
-
+ 
 
 endtime = time.time()
 #print(endtime)
