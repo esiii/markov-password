@@ -24,8 +24,8 @@ def DelLastChar(str):
 	str_list.pop()
 	return "".join(str_list)
 
-
-with open('/markov/data/password','rb') as file:
+readfile = input("Please enter the path of the dictionary to be trained (e.g: C:/1.txt): ")
+with open(readfile,'rb') as file:
 	for line in file:
 		line = line.decode("latin-1")
 		line = line.replace('\n','å')
@@ -52,6 +52,6 @@ for ngram in stats:
 	for key, value in stats[ngram].items():
 		stats[ngram][key] = value / float(total)
 
-with open('/markov/data/{}-gram.pickle'.format(max_ngrams), 'wb') as file:
+with open('./{}-gram.pickle'.format(max_ngrams), 'wb') as file:
 	pickle.dump(stats, file)
-
+print(stats)
