@@ -5,14 +5,14 @@ import time
 
 
 starttime = time.time()
-threshold_level = 10
-total_level = 1000
 
-total_length = 13
+total_level = int(input("please enter the value of total_level (e.g:1000)max_value=1500: "))#1000
+threshold_level = int(input("please enter the value of threshold_level (e.g: 10)max_value<total_level: "))#10
+total_length = int(input("Please enter the maximum length of the generated password (e.g:13): "))#13
 
 max_ngrams = 1
 
-with open('/data/{}-gram.pickle'.format(max_ngrams),'rb') as file:
+with open('./{}-gram.pickle'.format(max_ngrams),'rb') as file:
     alphabet = pickle.load(file)
 
 
@@ -174,23 +174,24 @@ def get_key_fast(index, remain_length, prev_char='Ω', remain_level = threshold_
             else:
                 return ""
 
+outputfile = input("Please enter the storage path of the output file (e.g: C:/data/markov-passwd.txt): ")
 
-result_file =  open('/data/1-markov-1e.txt','w')
+result_file =  open(outputfile,'w')
 if __name__ == "__main__":
     print("initing table")
     auto_partial_size()
     print("table init finished")
     passwd_space = get_keyspace()
     print("Total password space:{}".format(passwd_space))
-    for i in (random.sample(range(0,passwd_space),100000000)):
+    passwd_num = int(input("Please enter the number of generate passwords (Less than total password space): "))
+    for i in (random.sample(range(0,passwd_space),passwd_num)):
         #test_index = random.randint(0, passwd_space)
         test_index = i
         res = get_key_fast(test_index, total_length)
-        res_2 = res.replace('å',' ')
-        result_file.write(res_2 + '\n')
+        res_2 = res.replace('å','')
+        result_file.write(res_2)
 
  
 
 endtime = time.time()
-#print(endtime)
 print("Comusing time: %f" % (endtime - starttime))
